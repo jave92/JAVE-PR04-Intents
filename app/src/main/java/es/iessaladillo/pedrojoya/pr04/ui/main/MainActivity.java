@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import es.iessaladillo.pedrojoya.pr04.R;
 import es.iessaladillo.pedrojoya.pr04.data.local.Database;
 import es.iessaladillo.pedrojoya.pr04.data.local.model.Avatar;
+import es.iessaladillo.pedrojoya.pr04.ui.avatar.AvatarActivity;
 
 import static es.iessaladillo.pedrojoya.pr04.utils.ValidationUtils.isValidEmail;
 import static es.iessaladillo.pedrojoya.pr04.utils.ValidationUtils.isValidPhone;
@@ -30,6 +31,9 @@ import static es.iessaladillo.pedrojoya.pr04.utils.ValidationUtils.isValidUrl;
 @SuppressWarnings("WeakerAccess")
 public class MainActivity extends AppCompatActivity {
 
+    // Request Code (identificación de la petición)
+    public static final int RC_OTRA = 1;
+    private static final String EXTRA_NOMBRE="nombre";
     private TextView lblAvatar,lblName,lblEmail,lblPhonenumber,lblAddress,lblWeb;
     private ImageView imgAvatar,imgEmail,imgPhonenumber,imgAddress,imgWeb;
     private EditText txtName,txtEmail,txtPhonenumber,txtAddress,txtWeb;
@@ -260,6 +264,8 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     }
+
+
     // DO NOT TOUCH
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
