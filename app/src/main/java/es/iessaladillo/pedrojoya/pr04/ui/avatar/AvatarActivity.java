@@ -53,6 +53,8 @@ public class AvatarActivity extends AppCompatActivity {
         imgAvatar6.setTag(avatares.get(5).getImageResId());
         lblAvatar6.setText(avatares.get(5).getName());
 
+        // NO SELECCIONAS EL AVATAR ACTUAL.
+        // NO SE PUEDE SELECCIONAR NINGÚN AVATAR.
     }
 
     private void initViews(){
@@ -74,6 +76,7 @@ public class AvatarActivity extends AppCompatActivity {
         Intent intent;
         switch (v.getId()){
             case R.id.imgAvatar1:
+                // COPY-PASTE. HAZ UN MÉTODO!!!
                 intent = new Intent();
                 intent.putExtra(EXTRA_AVATAR,avatares.get(0));
                 setResult(RESULT_OK,intent);
@@ -147,12 +150,15 @@ public class AvatarActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    // NO LLAMAS A ESTE MÉTODO PORQUE NO LLAMAS A LA ACTIVIDAD.
     public static void startForResult(MainActivity actividad, int requestCode, String nombre) {
         Intent intencion = new Intent(actividad, AvatarActivity.class);
         intencion.putExtra(EXTRA_NOMBRE, nombre);
         actividad.startActivityForResult(intencion, requestCode);
     }
     // DO NO TOUCH
+    // NO SELECCIONAS EL AVATAR ACTUAL.
     private void selectImageView(ImageView imageView) {
         imageView.setAlpha(ResourcesUtils.getFloat(this, R.dimen.selected_image_alpha));
     }
