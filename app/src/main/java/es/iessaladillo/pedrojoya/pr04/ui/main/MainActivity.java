@@ -22,8 +22,6 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import es.iessaladillo.pedrojoya.pr04.R;
 import es.iessaladillo.pedrojoya.pr04.data.local.Database;
-import es.iessaladillo.pedrojoya.pr04.data.local.model.Avatar;
-import es.iessaladillo.pedrojoya.pr04.ui.avatar.AvatarActivity;
 
 import static es.iessaladillo.pedrojoya.pr04.utils.ValidationUtils.isValidEmail;
 import static es.iessaladillo.pedrojoya.pr04.utils.ValidationUtils.isValidPhone;
@@ -34,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     // Request Code (identificación de la petición)
     public static final int RC_OTRA = 1;
     private static final String EXTRA_NOMBRE="nombre";
+
     private TextView lblAvatar,lblName,lblEmail,lblPhonenumber,lblAddress,lblWeb;
     private ImageView imgAvatar,imgEmail,imgPhonenumber,imgAddress,imgWeb;
     private EditText txtName,txtEmail,txtPhonenumber,txtAddress,txtWeb;
@@ -151,6 +150,8 @@ public class MainActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId == EditorInfo.IME_ACTION_DONE){
                     save();
+                    // CREA UN MÉTODO DE UTILIDAD PARA ESTO EN UNA CLASE DE UTILIDAD. LO USARÁS EN
+                    // MUCHOS PROYECTOS.
                     InputMethodManager imm =
                             (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -160,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        // POR QUÉ NO LLAMAS A UN MÉTODO QUE RECIBA EL INTENT A ENVIAR Y ASÍ TE AHORRAS
+        // EL SWITCH DEL MÉTODO onClick() ?
         imgEmail.setOnClickListener(v1 -> onClick(v1));
         imgPhonenumber.setOnClickListener(v -> onClick(v));
         imgAddress.setOnClickListener(v -> onClick(v));
@@ -169,8 +172,13 @@ public class MainActivity extends AppCompatActivity {
         Intent intent;
         switch (v.getId()){
             case R.id.imgEmail:
+                // HAZ UN MÉTODO DE UTILIDAD POR SI LO TIENES QUE USAR EN OTROS PROYECTOS.
+                // (lo mismo para el resto de Intents)
+                // DEBERÍAS COMPROBAR QUE HAY DATOS ANTES DE ENVIAR EL INTENT.
                 intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse("mailto:"+txtEmail.getText().toString()));
+                // ESTA LÍNEA PUEDE PRODUCIR UN ERROR EN TIEMPO DE EJECUCIÓN SI NO HAY
+                // NINGUNA APLICACIÓN QUE SEPA RESPONDER A DICHO INTENT.
                 startActivity(intent);
                 break;
             case R.id.imgPhonenumber:
@@ -183,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.imgWeb:
+                // LA ACCIÓN DEL TEST ES ACTION_VIEW. POR ESO NO TE PASA EL TEST.
                 intent = new Intent(Intent.ACTION_WEB_SEARCH);
                 intent.putExtra(SearchManager.QUERY, txtWeb.getText().toString());
                 startActivity(intent);
@@ -190,6 +199,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void initViews(){
+        // AUNQUE ES PERFECTAMENTE VÁLIDO USAR findViewById TE RECOMIENDO QUE USES
+        // ActivityCompat.requireViewById().
         imgAvatar = findViewById(R.id.imgAvatar);
         lblAvatar = findViewById(R.id.lblAvatar);
         lblName = findViewById(R.id.lblName);
